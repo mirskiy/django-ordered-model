@@ -143,7 +143,9 @@ class OrderedModelBase(models.Model):
         """
         Move this object down one position.
         """
-        self.swap(self.get_ordering_queryset().filter(**{self.order_field_name + '__gt': getattr(self, self.order_field_name)}))
+        self.swap(self.get_ordering_queryset()
+                      .filter(**{self.order_field_name + '__gt': getattr(self, self.order_field_name)})
+                      .order_by(self.order_field_name))
 
     def to(self, order, extra_update=None):
         """
